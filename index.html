@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Nuestra boda</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+<style>
+/* 1. FONDO PRINCIPAL: Azul Marino Profundo */
+    #invitation-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: #001f3f !important; 
+        background-image: url("https://www.transparenttextures.com/patterns/p6-dark.png");
+        z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        transition: opacity 1s ease;
+        padding: 20px;
+    }
+
+    /* 2. EL SOBRE: Melón con textura */
+    .envelope {
+        width: 100%;
+        max-width: 600px; 
+        min-height: 350px;
+        background-color: #ffb07c !important; 
+        background-image: url("https://www.transparenttextures.com/patterns/rough-paper.png");
+        position: relative; 
+        cursor: pointer; 
+        box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 0 100px rgba(255, 255, 255, 0.1);
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        border-radius: 15px; 
+        z-index: 10;
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 20px;
+    }
+
+    .envelope:hover { transform: scale(1.02) translateY(-5px); }
+
+    /* 3. SELLO: Círculo Rojo con Corazón Blanco (Sin letras) */
+    .seal {
+        width: 140px; 
+        height: 140px; 
+        background: radial-gradient(circle, #d90429 0%, #8b0000 100%) !important;
+        border-radius: 50%;
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 20px;
+        position: relative; 
+    }
+
+    /* Corazón blanco un poco más pequeño y centrado */
+    .seal i {
+        color: #ffffff !important;
+        font-size: 80px; /* Tamaño reducido para un estilo más elegante */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+   
+
+   /* Ajuste para móviles */
+    @media (max-width: 650px) {
+        .seal { 
+            width: 110px; 
+            height: 110px; 
+        }
+        .seal i { font-size: 60px; }
+    }
+
+    /* 4. NOMBRES DENTRO DEL SOBRE */
+    .envelope-text {
+        text-align: center;
+        width: 100%;
+    }
+
+    .envelope-text h2 { 
+        font-size: 4rem !important; 
+        margin: 0 0 10px 0 !important;
+        font-family: 'Great Vibes', cursive !important;
+        color: #000000 !important; 
+        font-weight: bold;
+    }
+
+    .envelope-text h1 { 
+        font-size: 1.2rem !important; 
+        letter-spacing: 3px !important;
+        text-transform: uppercase !important;
+        color: #ffffff !important; 
+        font-weight: 600 !important;
+        margin: 0 !important;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+
+    /* 5. CUENTA REGRESIVA DE INICIO */
+    .countdown-container {
+        margin-top: 30px; 
+        text-align: center; 
+        z-index: 10;
+        width: 100%;
+    }
+
+    .countdown-container h1 { 
+        font-size: 1.3rem !important; 
+        color: #ffffff !important; 
+        font-family: 'Montserrat', sans-serif !important;
+        font-style: italic !important; 
+        font-weight: bold !important; 
+        margin-bottom: 10px !important;
+    }
+
+    #timer-envelope { 
+        font-size: 2.2rem !important; 
+        font-weight: 800 !important; 
+        color: #d4af37 !important; 
+        letter-spacing: 1px !important;
+    }
+
+    /* 6. PÉTALOS */
+    .petals-container { 
+        position: absolute; 
+        top: 0; left: 0; width: 100%; height: 100vh; 
+        pointer-events: none; overflow: hidden; z-index: 1; 
+    }
+
+    .petal { 
+        position: absolute; 
+        background: linear-gradient(145deg, #d4af37 0%, #f9e9a6 50%, #aa8412 100%);
+        border-radius: 150% 0 150% 0; 
+        opacity: 0.9; 
+        animation: fall linear infinite; 
+        filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-15vh) rotate(0deg); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+
+    body.locked { overflow: hidden; }
+
+    /* 7. ESTILOS DEL FOOTER */
+    .footer-countdown-wrapper { margin-top: 30px; }
+    .footer-countdown-text {
+        font-family: 'Montserrat', sans-serif;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: #ffb07c;
+        margin-bottom: 20px;
+    }
+
+    #footer-timer { gap: 15px; display: flex; justify-content: center; }
+    .timer-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 10px;
+        min-width: 70px;
+        border: 1px solid #d4af37;
+    }
+
+    .timer-unit span {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #d4af37;
+    }
+
+    .timer-unit label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #ffffff;
+        margin-top: 5px;
+    }
+
+    /* --- RESPONSIVE: MÓVILES --- */
+    @media (max-width: 650px) {
+        .envelope { 
+            min-height: 250px; 
+            padding: 15px;
+        }
+        
+        .seal { 
+            width: 110px; 
+            height: 110px; 
+            margin-bottom: 15px;
+        }
+
+        .seal i { font-size: 95px; }
+        .seal-letters { font-size: 2.2rem; margin-top: -5px; }
+
+        .envelope-text h2 { 
+            font-size: 2.5rem !important; 
+        }
+
+        .envelope-text h1 { 
+            font-size: 0.9rem !important; 
+        }
+
+        .countdown-container h1 {
+            font-size: 1rem !important;
+        }
+
+        #timer-envelope { 
+            font-size: 1.4rem !important; 
+        }
+
+        #footer-timer { gap: 8px; }
+        .timer-unit { min-width: 55px; padding: 8px; }
+        .timer-unit span { font-size: 1.3rem; }
+        .timer-unit label { font-size: 0.6rem; }
+    }
+
+
+/* Estilo para las nuevas imágenes del itinerario */
+.timeline-img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px; /* Ajustado para que no ocupe tanto como el SVG */
+    padding: 15px;
+}
+
+.timeline-img-wrapper img {
+    width: 150px; /* Tamaño similar al que tenían los SVG */
+    height: 150px;
+    object-fit: cover; /* Para que la imagen llene el círculo/cuadrado */
+    border-radius: 50%; /* Opcional: hace las imágenes circulares */
+    border: 3px solid #d4af37; /* Marco dorado para combinar con el resto */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+
+/* Estilo para el Video de Fondo */
+.video-background-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.video-background-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Esto hace que el video llene el espacio como una imagen de fondo */
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Capa oscura para que las letras blancas se lean bien */
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-content {
+    z-index: 2;
+    text-align: center;
+    padding: 0 15px;
+}
+
+
+
+#family .h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #444;
+    letter-spacing: 1px;
+}
+
+#family .text-primary {
+    font-size: 2.5rem;
+}
+
+.heaven-text {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #d4af37; /* Color dorado para que resalte con elegancia */
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+.cross {
+    font-size: 0.8em;
+    vertical-align: middle;
+    margin-left: 5px;
+    color: #888;
+    font-weight: normal;
+}
+
+
+#gift-dress .border-gold {
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+#gift-dress .border-gold:hover {
+    border: 1px solid #d4af37;
+    transform: translateY(-5px);
+}
+
+#gift-dress .fa-3x {
+    color: #d4af37 !important;
+}
+
+#gift-dress .h4 {
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+</style>
+
+</head>
+
+
+
+<body data-spy="scroll" data-target=".navbar" data-offset="51">
+
+
+
+    <script>document.body.classList.add('locked');</script>
+
+
+
+<div id="invitation-overlay">
+    <div class="petals-container" id="petals"></div>
+
+
+    <div class="envelope" id="open-envelope">
+        
+
+        <div class="seal">
+            <i class="fas fa-heart"></i>
+        </div>
+
+
+        <div class="envelope-text">
+            <h2 class="font-secondary">Sonia & Isael</h2>
+            <h1 style="color: #ffffff !important; opacity: 1 !important;">Toca para abrir</h1>
+        </div>
+    </div>
+
+   <div class="countdown-container">
+      <!--  <h1 style="color: #ffffff !important; opacity: 1 !important;">Nuestra boda comienza en:</h1>-->
+        <div id="timer-envelope">
+            <span id="e-days">00</span>d : <span id="e-hours">00</span>h : <span id="e-minutes">00</span>m : <span id="e-seconds">00</span>s
+        </div>
+    </div>
+</div> 
+
+<audio id="wedding-audio" loop>
+    <source src="audio/fondo.mp3" type="audio/mpeg">
+</audio>
+
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5">
+        <a href="index.html" class="navbar-brand d-block d-lg-none">
+            <h1 class="font-secondary text-white mb-n2">Sonia  <span class="text-primary"> e </span>  Isael</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav ml-auto py-0">
+                <a href="#home" class="nav-item nav-link active">Inicio</a>
+                <a href="#about" class="nav-item nav-link">Acerca</a>
+                <a href="#story" class="nav-item nav-link">Itinerario</a>
+            </div>
+            <a href="index.html" class="navbar-brand mx-5 d-none d-lg-block">
+                <h1 class="font-secondary text-white mb-n2">Sonia <span class="text-primary">E</span> Isael</h1>
+            </a>
+            <div class="navbar-nav mr-auto py-0">
+                <a href="#gallery" class="nav-item nav-link">Galeria</a>
+                <a href="#event" class="nav-item nav-link">Evento</a>
+                 <a href="#gift-dress" class="nav-item nav-link">Detalles</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 mb-5 pb-5" id="home">
+    <div class="video-background-container">
+        <!-- Eliminamos 'loop' y las fuentes estáticas -->
+        <video autoplay muted playsinline id="myVideo">
+            <source src="video/video1.mp4" type="video/mp4">
+            Tu navegador no soporta video.
+        </video>
+
+        <div class="video-overlay">
+            <!-- ... resto del contenido igual ... -->
+            <div class="video-content">
+                <h1 class="display-1 font-secondary text-white mt-n3 mb-md-4">Sonia & Isael</h1>
+                <div class="d-inline-block border-top border-bottom border-light py-3 px-4 mb-4">
+                    <h3 id="rotating-text" class="text-uppercase font-weight-normal text-white m-0" style="letter-spacing: 2px;">
+                        NOS CASAMOS
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Carousel End -->
+
+
+    <!-- Video Modal Start -->
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>        
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="" id="video"  allowscriptaccess="always" allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5" id="about">
+        <div class="container py-5">
+            <div class="section-title position-relative text-center">
+                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Acerca de</h6>
+                <h1 class="font-secondary display-4">Los Contrayentes</h1>
+                <i class="far fa-heart text-dark"></i>
+            </div>
+            <div class="row m-0 mb-4 mb-md-0 pb-2 pb-md-0">
+                <div class="col-md-6 p-0 text-center text-md-right">
+                    <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-5">
+                        <h3 class="mb-3">La novia</h3>
+                        <p>Sonia es una mujer de visión clara y pasos firmes; una líder que ha sabido transformar cada desafío en una oportunidad para brillar, demostrando que la verdadera grandeza nace de la combinación perfecta entre un corazón valiente y una mente imparable." </p>
+                        <br>
+                        <h3 class="font-secondary font-weight-normal text-muted mb-3"><i class="fa fa-female text-primary pr-3 ">
+                            
+                        </i>Sonia</h3>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6 p-0" style="min-height: 400px;">
+                    <img class="position-absolute w-100 h-100" src="img/novia.jpeg" style="object-fit: cover;">
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-md-6 p-0" style="min-height: 400px;">
+                    <img class="position-absolute w-100 h-100" src="img/novio.jpeg" style="object-fit: cover;">
+                </div>
+                <div class="col-md-6 p-0 text-center text-md-left">
+                    <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-5">
+                        <h3 class="mb-3">El novio</h3>
+                        <p>Isael es un hombre de visión y esfuerzo que ha sabido transformar el trabajo duro en un legado, demostrando que el verdadero éxito pertenece a quien tiene la valentía de persistir hasta conquistar su cima.</p>
+                        <br>
+                        <h3 class="font-secondary font-weight-normal text-muted mb-3"><i class="fa fa-male text-primary pr-3"></i>Isael</h3>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+
+<!-- Parents & Godparents Start -->
+    <div class="container-fluid py-5" id="family">
+        <div class="container py-5">
+            <div class="section-title position-relative text-center">
+                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Con la bendición de nuestros</h6>
+                <h1 class="font-secondary display-4">Padres y Padrinos</h1>
+                <i class="far fa-heart text-dark"></i>
+            </div>
+            <div class="row justify-content-center text-center">
+
+                 <!-- Padres de la Novia -->
+                <div class="col-md-5 mb-5">
+                    <h3 class="font-secondary text-primary mb-4">Padres de la Novia</h3>
+                    <p class="h4 mb-1">Sr. Samuel Lopez Ozuna <span class="cross">†</span></p>
+                     <p class="heaven-text">"Siempre en nuestros corazones"</p>
+                    <p class="h4 mb-2">Sra. Rosa Aide Ventura Ulloa <span class="cross"></span></p>
+                   
+                </div>
+            </div>
+                <div class="row justify-content-center text-center"
+                    <!-- Padres del Novio -->
+                <div class="col-md-5 mb-5">
+                    <h3 class="font-secondary text-primary mb-4">Padres del Novio</h3>
+                    <p class="h4 mb-1">Sr. Ignacio Santiago Cruz <span class="cross">†</span></p>
+                    <p class="h4 mb-2">Sra. Elena Lopez Valier <span class="cross">†</span></p>
+                    <p class="heaven-text">"Desde el cielo nos acompañan"</p>
+                </div>
+                </div>
+                <!-- Separador ornamental -->
+                <div class="col-md-1 d-none d-md-block">
+                    <div class="h-100 border-left border-primary mx-auto" style="width: 1px; opacity: 0.3;"></div>
+                </div>
+
+               
+
+            <div class="row justify-content-center text-center mt-4">
+                <!-- Padrinos de Velación -->
+                <div class="col-md-6">
+                    <div class="bg-secondary p-5 rounded shadow-sm">
+                        <h3 class="font-secondary text-primary mb-4">Madrina de Velación</h3>
+                        <p class="h4 mb-1">Sra. Irma Ventura Prado</p>
+                      <!--   <p class="h4">Nombre de la Madrina</p>  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Parents & Godparents End -->
+
+
+
+    <!-- Story Start -->
+ 
+<div class="section-title position-relative text-center" id="story">
+                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Evento</h6>
+                <h1 class="font-secondary display-4">Itinerario</h1>
+                <i class="far fa-heart text-dark"></i>
+            </div>
+
+ <div class="container timeline position-relative p-0">
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-right">
+            <div class="timeline-img-wrapper mr-md-3">
+                <img src="img/misa.png" alt="Misa">
+            </div>
+        </div>
+        <div class="col-md-6 text-center text-md-left">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 ml-md-3">
+                
+                <h4 class="mb-2">Ceremonia Religiosa</h4>
+                </a>
+                <p class="text-uppercase mb-2">12:00 p.m.</p>
+            </div>
+        </div>
+     </div>
+
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+            <div class="timeline-img-wrapper ml-md-3">
+                <img src="img/coctel.jpg" alt="Cóctel">
+            </div>
+        </div>
+        <div class="col-md-6 text-center text-md-right">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                <h4 class="mb-2">Recepción</h4>
+                <p class="text-uppercase mb-2">02:00 p.m</p>
+            </div>
+        </div>
+    </div>
+    
+
+
+<div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-right">
+            <div class="timeline-img-wrapper mr-md-3">
+                <img src="img/cena.jpg" alt="Misa">
+            </div>
+        </div>
+        <div class="col-md-6 text-center text-md-right">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                <h4 class="mb-2">Banquete</h4>
+                <p class="text-uppercase mb-2">03:00 p.m</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+            <div class="timeline-img-wrapper ml-md-3">
+                <img src="img/vals.png" alt="Cóctel">
+            </div>
+        </div>
+        <div class="col-md-6 text-center text-md-right">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                <h4 class="mb-2">Vals familiar</h4>
+                <p class="text-uppercase mb-2">04:00 p.m</p>
+            </div>
+        </div>
+    </div>
+
+     <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+            <div class="timeline-img-wrapper ml-md-3">
+                <img src="img/brindis.jpg" alt="Cóctel">
+            </div>
+        </div>
+        <div class="col-md-6 text-center text-md-right">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                <h4 class="mb-2">Brindis</h4>
+                <p class="text-uppercase mb-2">04:30 p.m</p>
+            </div>
+        </div>
+    </div>
+
+   <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+            <div class="timeline-img-wrapper ml-md-3">
+                <img src="img/fiesta.png" alt="Cóctel">
+            </div>
+        </div>
+        <div class="col-md-6 text-center text-md-right">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                <h4 class="mb-2">Baile</h4>
+                <p class="text-uppercase mb-2">05:00 p.m</p>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+            <div class="timeline-img-wrapper ml-md-3">
+                <img src="img/fin.jpg" alt="Cóctel">
+            </div>
+        </div>
+    <div class="col-md-6 text-center text-md-right">
+            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                <h4 class="mb-2">Fin de la fiesta</h4>
+                <p class="text-uppercase mb-2">07:30 p.m</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+    <!-- Story End -->
+
+
+    <!-- Gallery Start -->
+    <div class="container-fluid bg-gallery" id="gallery" style="padding: 120px 0; margin: 90px 0;">
+        <div class="section-title position-relative text-center" style="margin-bottom: 120px;">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Galeria</h6>
+            <h1 class="font-secondary display-4 text-white">Nuestra Galeria de fotos</h1>
+            <i class="far fa-heart text-white"></i>
+        </div>
+        <div class="owl-carousel gallery-carousel">
+            <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria1.jpeg" alt="">
+                <a href="img/galeria2.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+            <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria3.jpeg" alt="">
+                <a href="img/galeria4.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+            <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria5.jpeg" alt="">
+                <a href="img/galeria6.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+            <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria7.jpeg" alt="">
+                <a href="img/galeria8.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+            <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria9.jpeg" alt="">
+                <a href="img/galeria10.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+            <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria11.jpeg" alt="">
+                <a href="img/galeria12.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+             <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria13.jpeg" alt="">
+                <a href="img/galeria14.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+             <div class="gallery-item">
+                <img class="img-fluid w-100" src="img/galeria15.jpeg" alt="">
+                <a href="img/galeria16.jpeg" data-lightbox="gallery">
+                    <i class="fa fa-2x fa-plus text-white"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Gallery End -->
+
+
+    <!-- Event Start -->
+    <div class="container-fluid py-5" id="event">
+        <div class="container py-5">
+            <div class="section-title position-relative text-center">
+                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Evento</h6>
+                <h1 class="font-secondary display-4">Nuestro Evento de Boda</h1>
+                <i class="far fa-heart text-dark"></i>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h5 class="font-weight-normal text-muted mb-3 pb-3">Con la misma determinación con la que hemos construido nuestras vidas, hoy decidimos unir nuestros caminos. <br><br>
+                    Sonia e Isael tenemos el honor de invitarte a Nuestra Boda. <br><br>
+                    Un día para celebrar que el éxito más grande no se alcanza solo, sino al lado de la persona amada. <br><br>
+                ¡Acompáñennos a escribir este nuevo capítulo!</h5>
+                </div>
+            </div>
+            <div class="row">
+               
+
+                    <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+San+Francisco+de+Asís+Tonalá+Chiapas" target="_blank">
+                              <img class="img-fluid mb-4" src="img/parroquia.png" alt="Ubicación de la Misa" style="cursor: pointer;">
+                         </a>
+                    <h4 class="mb-3">Misa</h4>
+                <p class="mb-2">Parroquia de San Francisco de Asís</p>
+                <p class="mb-2">5 de Mayo 12, Las Flores, 30500 Tonalá, Chis.</p>
+                <p class="mb-0">12:00AM</p>
+                    </div>
+
+
+
+                <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0">
+                        <a href="https://maps.app.goo.gl/eWZ2rJQ9UumzbbmUA" target="_blank">
+                              <img class="img-fluid mb-4" src="img/dimarti.png" alt="Ubicación de la Misa" style="cursor: pointer;">
+                         </a>
+                    <h4 class="mb-3">Recepción</h4>
+                <p class="mb-2">Salon de eventos Lidia di Marti</p>
+                <p class="mb-2">San Francisco, Las Flores, 30500 Tonalá, Chis.</p>
+                <p class="mb-0">02:00 p.m.</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- Event End -->
+
+
+    <!-- Gift & Dress Code Start -->
+    <div class="container-fluid py-5" id="gift-dress">
+        <div class="container py-5">
+            <div class="section-title position-relative text-center">
+                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Detalles Importantes</h6>
+                <h1 class="font-secondary display-4">Vestimenta y Regalos</h1>
+                <i class="far fa-heart text-dark"></i>
+            </div>
+            <div class="row justify-content-center">
+                <!-- Código de Vestimenta -->
+                <div class="col-md-5 text-center mb-5">
+                    <div class="bg-secondary p-5 rounded h-100 shadow-sm border-gold">
+                        <i class="fas fa-user-tie fa-3x text-primary mb-4"></i>
+                        <h3 class="font-secondary text-primary mb-3">Código de Vestimenta</h3>
+                        <p class="h4 mb-3">FORMAL</p>
+                        <p class="mb-0 text-muted">Sí a la fiesta, sí al glamour... pero no al blanco.</p>
+                        <p class="mb-0 text-muted">Color exclusivo para la novia.</p>
+                    </div>
+                </div>
+
+                <!-- Mesa de Regalos -->
+                <div class="col-md-5 text-center mb-5">
+                    <div class="bg-secondary p-5 rounded h-100 shadow-sm border-gold">
+                        <i class="fas fa-gift fa-3x text-primary mb-4"></i>
+                        <h3 class="font-secondary text-primary mb-3">Mesa de Regalos</h3>
+                        <p class="mb-3">Compartir este día contigo será lo mejor, pero si estás pensando en un detalle.
+                        Cualquier obsequio es bien recibido</p>
+                        <!-- Botón para Mesa de Regalos o Datos Bancarios -->
+                        <div class="d-flex flex-column gap-2">
+                             <p class="font-weight-bold text-dark mb-1">Lluvia de Sobres</p>
+                             <small class="text-muted">(El día del evento podrás encontrar un buzón donde podrás depositar tu sobre)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Gift & Dress Code End -->
+
+
+
+
+    <!-- Footer Start -->
+ <div class="container-fluid bg-dark text-white py-5" id="contact" style="margin-top: 90px;">
+    <div class="container text-center py-5">
+        <div class="section-title position-relative text-center">
+            <h1 class="font-secondary display-3 text-white">Te esperamos para celebrar</h1>
+            <i class="far fa-heart text-white"></i>
+        </div>
+        
+        <div class="footer-countdown-wrapper">
+            <p class="footer-countdown-text">Faltan solo:</p>
+            <div id="footer-timer" class="d-flex justify-content-center">
+                <div class="timer-unit">
+                    <span id="f-days">00</span>
+                    <label>Días</label>
+                </div>
+                <div class="timer-unit">
+                    <span id="f-hours">00</span>
+                    <label>Hrs</label>
+                </div>
+                <div class="timer-unit">
+                    <span id="f-minutes">00</span>
+                    <label>Min</label>
+                </div>
+                <div class="timer-unit">
+                    <span id="f-seconds">00</span>
+                    <label>Seg</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Footer End -->
+
+
+    <!-- Scroll to Bottom -->
+    <i class="fa fa-2x fa-angle-down text-white scroll-to-bottom"></i>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-outline-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Generar pétalos GRANDES
+        const petalsContainer = document.getElementById('petals');
+        // Generamos un poco menos para no recargar, ya que son más grandes
+        for (let i = 0; i < 25; i++) { 
+            let petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + '%';
+            
+            // TAMAÑO AUMENTADO: Rango entre 25px y 55px
+            let size = Math.random() * 30 + 25 + 'px'; 
+            petal.style.width = size;
+            petal.style.height = size;
+            
+            // Movimiento un poco más lento por ser más grandes
+            petal.style.animationDuration = Math.random() * 4 + 5 + 's';
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            petalsContainer.appendChild(petal);
+        }
+
+        // 2. Cuenta regresiva para el 15 de Junio 2026 (Sigue igual)
+        const targetDate = new Date("June 06, 2026 12:00:00").getTime();
+        
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                document.getElementById("e-days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("e-hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("e-minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("e-seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // 3. Abrir invitación (Sigue igual)
+        const btnOpen = document.getElementById('open-envelope');
+        const overlay = document.getElementById('invitation-overlay');
+        const audio = document.getElementById('wedding-audio');
+
+        btnOpen.addEventListener('click', function() {
+            overlay.style.opacity = '0';
+            audio.play().catch(e => console.log("Audio bloqueado por el navegador"));
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.body.classList.remove('locked');
+            }, 1000);
+        });
+    });
+
+    // Generar pétalos GRANDES y desde arriba
+    const petalsContainer = document.getElementById('petals');
+    for (let i = 0; i < 30; i++) { 
+        let petal = document.createElement('div');
+        petal.className = 'petal';
+        
+        // Posición horizontal aleatoria
+        petal.style.left = Math.random() * 100 + '%';
+        
+        // Tamaño grande
+        let size = Math.random() * 30 + 25 + 'px'; 
+        petal.style.width = size;
+        petal.style.height = size;
+        
+        // Duración de caída (entre 6 y 10 segundos para que sea suave)
+        petal.style.animationDuration = Math.random() * 4 + 6 + 's';
+        
+        // Retraso aleatorio para que no caigan todos al mismo tiempo al cargar
+        petal.style.animationDelay = Math.random() * 8 + 's';
+        
+        petalsContainer.appendChild(petal);
+    }
+
+
+    // Lógica para el segundo contador (Footer)
+const footerTargetDate = new Date("June 06, 2026 12:00:00").getTime();
+
+function updateFooterTimer() {
+    const now = new Date().getTime();
+    const diff = footerTargetDate - now;
+
+    if (diff > 0) {
+        document.getElementById("f-days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById("f-hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById("f-minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById("f-seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    }
+}
+setInterval(updateFooterTimer, 1000);
+updateFooterTimer();
+
+
+// Lógica para rotar el texto sobre el video
+const phrases = [
+    "NOS CASAMOS",
+    "Tenemos el honor de invitarte a nuestra boda"
+];
+let currentPhraseIndex = 0;
+const textElement = document.getElementById("rotating-text");
+
+function rotateText() {
+    textElement.style.opacity = 0; // Desvanece
+    setTimeout(() => {
+        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+        textElement.innerText = phrases[currentPhraseIndex];
+        textElement.style.opacity = 1; // Aparece
+    }, 500); // Tiempo de la transición
+}
+
+// Cambia el texto cada 4 segundos
+setInterval(rotateText, 4000);
+
+
+
+
+
+const videoPlayer = document.getElementById('myVideo');
+const videoSources = [
+    "video/video1.mp4",
+    "video/video2.mp4",
+    "video/video3.mp4",
+    "video/video4.mp4"
+];
+let nextVideoIndex = 1; // Empezamos por el segundo (el primero ya carga el HTML)
+
+videoPlayer.addEventListener('ended', function() {
+    // Actualizamos la fuente del video
+    this.src = videoSources[nextVideoIndex];
+    this.play();
+    
+    // Incrementamos el índice o volvemos a 0 si llegamos al final (bucle)
+    nextVideoIndex = (nextVideoIndex + 1) % videoSources.length;
+});
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
